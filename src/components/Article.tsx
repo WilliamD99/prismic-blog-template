@@ -8,7 +8,10 @@ import { dateFormatter } from "../lib/dateFormatter";
 
 import { Heading } from "./Heading";
 
-export function Article({ article }) {
+// Types
+import { ArticleDocument } from '../../prismicio-types'
+
+export function Article({ article } : { article : ArticleDocument}) {
   const featuredImage =
     (prismic.isFilled.image(article.data.featuredImage) &&
       article.data.featuredImage) ||
@@ -20,7 +23,7 @@ export function Article({ article }) {
 
   return (
     <li className="grid grid-cols-1 items-start gap-6 md:grid-cols-3 md:gap-8">
-      <PrismicNextLink document={article} tabIndex="-1">
+      <PrismicNextLink document={article} tabIndex={-1}>
         <div className="aspect-h-3 aspect-w-4 relative bg-gray-100">
           {prismic.isFilled.image(featuredImage) && (
             <PrismicNextImage
@@ -38,7 +41,7 @@ export function Article({ article }) {
           </PrismicNextLink>
         </Heading>
         <p className="font-serif italic tracking-tighter text-slate-500">
-          {dateFormatter.format(date)}
+          {date ? dateFormatter.format(date) : <></>}
         </p>
         {excerpt && (
           <p className="font-serif leading-relaxed md:text-lg md:leading-relaxed">
