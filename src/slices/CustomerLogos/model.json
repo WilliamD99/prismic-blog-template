@@ -1,0 +1,60 @@
+{
+  "id": "customer_logos",
+  "type": "SharedSlice",
+  "name": "CustomerLogos",
+  "description": "CustomerLogos",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "eyebrowHeadline": {
+          "type": "StructuredText",
+          "config": {
+            "label": "eyebrowHeadline",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "strong,em,rtl,heading2"
+          }
+        },
+        "callToActionLabel": {
+          "type": "Text",
+          "config": {
+            "label": "callToActionLabel",
+            "placeholder": ""
+          }
+        },
+        "callToActionLink": {
+          "type": "Link",
+          "config": {
+            "label": "callToActionLink",
+            "placeholder": "",
+            "select": null
+          }
+        }
+      },
+      "items": {
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "link": {
+          "type": "Link",
+          "config": {
+            "label": "link",
+            "placeholder": "",
+            "select": null
+          }
+        }
+      }
+    }
+  ]
+}
