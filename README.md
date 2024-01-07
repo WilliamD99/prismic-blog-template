@@ -1,6 +1,6 @@
-# Prismic + Next.js Blog Starter
+# Prismic + Next.js Blog Template
 
-This sample blog is an excellent starting point to explore [Next.js][nextjs] and [Prismic][prismic]. Get it up and running in minutes. Modify and adapt it to your liking; it's all yours!
+This sample blog is an excellent starting point to explore [Next.js][nextjs] and [Prismic][prismic]. Get it up and running in minutes.
 
 - **Demo**: [Open live demo][live-demo]
 - **Learn more about Prismic and Next.js**: [Prismic Next.js Documentation][prismic-docs]
@@ -54,4 +54,4 @@ limitations under the License.
 [prismic-sign-up]: https://prismic.io/dashboard/signup
 [starter-docs]: ./docs/README.md
 [nextjs]: https://nextjs.org/
-[live-demo]: https://nextjs-starter-prismic-blog.vercel.app/
+[live-demo]: https://prismic-blog-template.vercel.app/
