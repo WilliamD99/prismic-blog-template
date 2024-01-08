@@ -40,6 +40,13 @@
           "thumbnails": []
         }
       },
+      "group": {
+        "type": "Group",
+        "config": {
+          "label": "group",
+          "fields": {}
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",

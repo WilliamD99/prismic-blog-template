@@ -4,6 +4,11 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+/**
+ * Item in *Article → group*
+ */
+export interface ArticleDocumentDataGroupItem {}
+
 type ArticleDocumentDataSlicesSlice =
   | VideoBlockSlice
   | CustomerLogosSlice
@@ -50,6 +55,17 @@ interface ArticleDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   featuredImage: prismic.ImageField<never>;
+
+  /**
+   * group field in *Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.group[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  group: prismic.GroupField<Simplify<ArticleDocumentDataGroupItem>>;
 
   /**
    * Slice Zone field in *Article*
@@ -107,6 +123,38 @@ export type ArticleDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
     Simplify<ArticleDocumentData>,
     "article",
+    Lang
+  >;
+
+/**
+ * Content for Category documents
+ */
+interface CategoryDocumentData {
+  /**
+   * Category Name field in *Category*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category.category_name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  category_name: prismic.RichTextField;
+}
+
+/**
+ * Category document from Prismic
+ *
+ * - **API ID**: `category`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CategoryDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<CategoryDocumentData>,
+    "category",
     Lang
   >;
 
@@ -335,6 +383,7 @@ export type SettingsDocument<Lang extends string = string> =
 
 export type AllDocumentTypes =
   | ArticleDocument
+  | CategoryDocument
   | NavigationDocument
   | PageDocument
   | SettingsDocument;
@@ -940,7 +989,10 @@ declare module "@prismicio/client" {
     export type {
       ArticleDocument,
       ArticleDocumentData,
+      ArticleDocumentDataGroupItem,
       ArticleDocumentDataSlicesSlice,
+      CategoryDocument,
+      CategoryDocumentData,
       NavigationDocument,
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
