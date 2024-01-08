@@ -1,6 +1,6 @@
-# Prismic + Next.js Blog Starter
+# Prismic + Next.js Blog Template
 
-This sample blog is an excellent starting point to explore [Next.js][nextjs] and [Prismic][prismic]. Get it up and running in minutes. Modify and adapt it to your liking; it's all yours!
+This sample blog is an excellent starting point to explore [Next.js][nextjs] and [Prismic][prismic]. Get it up and running in minutes.
 
 - **Demo**: [Open live demo][live-demo]
 - **Learn more about Prismic and Next.js**: [Prismic Next.js Documentation][prismic-docs]
@@ -33,17 +33,16 @@ When you're ready to start your project, run the following command:
 npm run dev
 ```
 
-## Documentation
+## Production Note
 
-To learn how to work with your new project, [**see this starter's docs**][starter-docs].
+During production, changes made in the Prismic Dashboard may be cached. 
+So to revalidate the cache, please set the webhook to send the request to "/api/revalidate".
 
-To learn more about working with Prismic, [**see the Prismic docs**][prismic-docs].
+
 
 ## License
 
 ```
-Copyright 2013-2023 Prismic <contact@prismic.io> (https://prismic.io)
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -62,4 +61,4 @@ limitations under the License.
 [prismic-sign-up]: https://prismic.io/dashboard/signup
 [starter-docs]: ./docs/README.md
 [nextjs]: https://nextjs.org/
-[live-demo]: https://nextjs-starter-prismic-blog.vercel.app/
+[live-demo]: https://prismic-blog-template.vercel.app/
