@@ -33,6 +33,13 @@ When you're ready to start your project, run the following command:
 npm run dev
 ```
 
+## Production Note
+
+During production, changes made in the Prismic Dashboard may be cached. 
+So to revalidate the cache, please set the webhook to send the request to "/api/revalidate".
+
+
+
 ## License
 
 ```
