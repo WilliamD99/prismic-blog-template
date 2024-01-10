@@ -13,7 +13,6 @@ interface SearchPageProps {
 
 export const dynamicParams = false;
 
-
 export default async function SearchPage({ searchParams } : SearchPageProps) {
     const client = createClient()
 
