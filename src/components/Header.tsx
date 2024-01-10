@@ -9,6 +9,7 @@ import { HorizontalDivider } from "./HorizontalDivider";
 
 // Types
 import {SettingsDocument, NavigationDocument} from "../../prismicio-types"
+import SearchBtn from "./SearchBtn";
 
 interface ProfileProps {
   name: prismic.TitleField,
@@ -89,6 +90,8 @@ export const Header = ({
                 </PrismicNextLink>
               </NavItem>
             ))}
+            <SearchBtn />
+
           </ul>
         </nav>
         {withProfile && (

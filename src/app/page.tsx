@@ -5,6 +5,7 @@ import { Layout } from "../components/Layout";
 import { Bounded } from "../components/Bounded";
 import { Article } from "../components/Article";
 import Pagination from "../components/Pagination";
+import CategorySelector from "../components/CategorySelector";
 
 export async function generateMetadata() {
   const client = createClient();
@@ -26,7 +27,7 @@ export default async function Index({ searchParams }: SearchParamsProps) {
   let pageNum = searchParams.page ?? 1
   let pageLimit = searchParams.limit ?? 2 // WIP
 
-  const result = await client.getByType("article", {
+  const results = await client.getByType("article", {
     orderings: [
       { field: "my.article.publishDate", direction: "desc" },
       { field: "document.first_publication_date", direction: "desc" },
@@ -34,7 +35,7 @@ export default async function Index({ searchParams }: SearchParamsProps) {
     pageSize: pageLimit,
     page: pageNum
   });
-  let articles = result.results
+  let articles = results.results
   
   const navigation = await client.getSingle("navigation");
   const settings = await client.getSingle("settings");
@@ -46,12 +47,13 @@ export default async function Index({ searchParams }: SearchParamsProps) {
       settings={settings}
     >
       <Bounded size="widest">
+        <CategorySelector />
         <ul className="grid grid-cols-1 gap-16">
           {articles.map((article) => (
             <Article key={article.id} article={article} />
           ))}
         </ul>
-        <Pagination totalPage={result.total_pages}/>
+        <Pagination totalPage={results.total_pages}/>
       </Bounded>
     </Layout>
   );

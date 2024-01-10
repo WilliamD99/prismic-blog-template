@@ -4,11 +4,6 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-/**
- * Item in *Article → group*
- */
-export interface ArticleDocumentDataGroupItem {}
-
 type ArticleDocumentDataSlicesSlice =
   | VideoBlockSlice
   | CustomerLogosSlice
@@ -55,17 +50,6 @@ interface ArticleDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   featuredImage: prismic.ImageField<never>;
-
-  /**
-   * group field in *Article*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: article.group[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#group
-   */
-  group: prismic.GroupField<Simplify<ArticleDocumentDataGroupItem>>;
 
   /**
    * Slice Zone field in *Article*
@@ -127,26 +111,63 @@ export type ArticleDocument<Lang extends string = string> =
   >;
 
 /**
+ * Item in *Category → group*
+ */
+export interface CategoryDocumentDataGroupItem {
+  /**
+   * article field in *Category → group*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category.group[].article
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  article: prismic.ContentRelationshipField<"article">;
+}
+
+/**
  * Content for Category documents
  */
 interface CategoryDocumentData {
   /**
-   * Category Name field in *Category*
+   * Name field in *Category*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Description field in *Category*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: category.category_name
+   * - **API ID Path**: category.description
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
-  category_name: prismic.RichTextField;
+  description: prismic.RichTextField;
+
+  /**
+   * group field in *Category*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: category.group[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  group: prismic.GroupField<Simplify<CategoryDocumentDataGroupItem>>;
 }
 
 /**
  * Category document from Prismic
  *
  * - **API ID**: `category`
- * - **Repeatable**: `false`
+ * - **Repeatable**: `true`
  * - **Documentation**: https://prismic.io/docs/custom-types
  *
  * @typeParam Lang - Language API ID of the document.
@@ -989,10 +1010,10 @@ declare module "@prismicio/client" {
     export type {
       ArticleDocument,
       ArticleDocumentData,
-      ArticleDocumentDataGroupItem,
       ArticleDocumentDataSlicesSlice,
       CategoryDocument,
       CategoryDocumentData,
+      CategoryDocumentDataGroupItem,
       NavigationDocument,
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
