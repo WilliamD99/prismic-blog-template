@@ -12,7 +12,6 @@ import { Bounded } from '@/src/components/Bounded';
 import { Article } from '@/src/components/Article';
 import CategorySelector from '@/src/components/CategorySelector';
 
-export const dynamicParams = false;
 
 export async function generateMetadata() {
     const client = createClient()
