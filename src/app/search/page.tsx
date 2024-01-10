@@ -13,6 +13,15 @@ interface SearchPageProps {
 
 export const dynamicParams = false;
 
+export async function generateMetadata() {
+    const client = createClient()
+    const settings = await client.getSingle("settings")
+
+    return {
+        title: prismic.asText(settings.data.name)
+    }
+}
+
 export default async function SearchPage({ searchParams } : SearchPageProps) {
     const client = createClient()
 

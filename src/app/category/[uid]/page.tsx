@@ -11,14 +11,14 @@ import { Bounded } from '@/src/components/Bounded';
 // import { Article } from '../../../components/Article'
 import { Article } from '@/src/components/Article';
 import CategorySelector from '@/src/components/CategorySelector';
+import capitalizeStr from '../../../lib/capitalizeStr'
 
-
-export async function generateMetadata() {
+export async function generateMetadata({ params } : PageProps) {
     const client = createClient()
     const settings = await client.getSingle("settings")
 
     return {
-        title: prismic.asText(settings.data.name)
+        title: prismic.asText(settings.data.name) + ` - ${capitalizeStr(params.uid)}`
     }
 }
 
