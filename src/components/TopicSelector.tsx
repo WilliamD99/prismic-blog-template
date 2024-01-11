@@ -6,7 +6,7 @@ import clsx from 'clsx';
 export default async function CategorySelector({ current } : { current?: string}) {
     const client = createClient();
 
-    const categories = await client.getAllByType("category", {
+    const categories = await client.getAllByType("topic", {
         graphQuery: `
             {
                 category {
@@ -22,7 +22,7 @@ export default async function CategorySelector({ current } : { current?: string}
                 {
                     categories.map(category => (
                         <Link 
-                            href={`/category/${category.uid}`} 
+                            href={`/topic/${category.uid}`} 
                             key={category.uid}
                             className={clsx(
                                 current === category.uid && "font-bold pointer-events-none", 

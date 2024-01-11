@@ -77,7 +77,7 @@ export const Header = ({
     <Bounded as="header">
       <div className="grid grid-cols-1 justify-items-center gap-20">
         <nav>
-          <ul className="flex flex-wrap justify-center gap-10">
+          <ul className="flex flex-wrap justify-center items-center gap-10">
             <NavItem>
               <Link href="/">
                 <PrismicText field={navigation.data.homepageLabel} />

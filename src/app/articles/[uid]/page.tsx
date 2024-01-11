@@ -5,7 +5,6 @@ import { PrismicText, SliceZone } from "@prismicio/react";
 
 import { createClient } from "../../../prismicio";
 import { components } from "../../../slices";
-import { Layout } from "../../../components/Layout";
 import { Bounded } from "../../../components/Bounded";
 import { Heading } from "../../../components/Heading";
 import { HorizontalDivider } from "../../../components/HorizontalDivider";
@@ -79,20 +78,13 @@ export default async function Page({ params } : PageProps) {
       { field: "document.first_publication_date", direction: "desc" },
     ],
   });
-  const navigation = await client.getSingle("navigation");
-  const settings = await client.getSingle("settings");
 
   const date = prismic.asDate(
     article.data.publishDate || article.first_publication_date
   );
 
   return (
-    <Layout
-      navigation={navigation}
-      withHeaderDivider={false}
-      withProfile={false}
-      settings={settings}
-    >
+    <>
       <Bounded>
         <Link href="/" className="font-semibold tracking-tight text-slate-400">
           &larr; Back to articles
@@ -126,7 +118,7 @@ export default async function Page({ params } : PageProps) {
           </div>
         </Bounded>
       )}
-    </Layout>
+    </>
   );
 }
 

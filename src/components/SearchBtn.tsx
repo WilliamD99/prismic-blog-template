@@ -22,8 +22,8 @@ export default function SearchBtn() {
 
     return (
         <>
-            <form onSubmit={handleSearch}>
-                <input type='search' required placeholder='Search article' onChange={handleInputChange} />
+            <form className='relative space-x-5' onSubmit={handleSearch}>
+                <input type='search' id="search-bar" className='border-b-2 py-1' required placeholder='Search article' onChange={handleInputChange} />
                 <button type='submit'>Search</button>
             </form>
         </>

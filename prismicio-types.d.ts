@@ -4,6 +4,21 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+/**
+ * Item in *Article → Topics*
+ */
+export interface ArticleDocumentDataTopicsItem {
+  /**
+   * Topic field in *Article → Topics*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.topics[].topic
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  topic: prismic.ContentRelationshipField<"topic">;
+}
+
 type ArticleDocumentDataSlicesSlice =
   | VideoBlockSlice
   | CustomerLogosSlice
@@ -50,6 +65,17 @@ interface ArticleDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   featuredImage: prismic.ImageField<never>;
+
+  /**
+   * Topics field in *Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.topics[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  topics: prismic.GroupField<Simplify<ArticleDocumentDataTopicsItem>>;
 
   /**
    * Slice Zone field in *Article*
@@ -107,75 +133,6 @@ export type ArticleDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
     Simplify<ArticleDocumentData>,
     "article",
-    Lang
-  >;
-
-/**
- * Item in *Category → group*
- */
-export interface CategoryDocumentDataGroupItem {
-  /**
-   * article field in *Category → group*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: category.group[].article
-   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
-   */
-  article: prismic.ContentRelationshipField<"article">;
-}
-
-/**
- * Content for Category documents
- */
-interface CategoryDocumentData {
-  /**
-   * Name field in *Category*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: category.name
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  name: prismic.KeyTextField;
-
-  /**
-   * Description field in *Category*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: category.description
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  description: prismic.RichTextField;
-
-  /**
-   * group field in *Category*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: category.group[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#group
-   */
-  group: prismic.GroupField<Simplify<CategoryDocumentDataGroupItem>>;
-}
-
-/**
- * Category document from Prismic
- *
- * - **API ID**: `category`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/custom-types
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type CategoryDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<CategoryDocumentData>,
-    "category",
     Lang
   >;
 
@@ -402,12 +359,93 @@ export type SettingsDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Content for Topic documents
+ */
+interface TopicDocumentData {
+  /**
+   * Name field in *Topic*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: topic.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Description field in *Topic*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: topic.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Feature Image field in *Topic*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: topic.feature_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  feature_image: prismic.ImageField<never> /**
+   * Meta Title field in *Topic*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: topic.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Topic*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: topic.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Topic*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: topic.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Topic document from Prismic
+ *
+ * - **API ID**: `topic`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TopicDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<TopicDocumentData>, "topic", Lang>;
+
 export type AllDocumentTypes =
   | ArticleDocument
-  | CategoryDocument
   | NavigationDocument
   | PageDocument
-  | SettingsDocument;
+  | SettingsDocument
+  | TopicDocument;
 
 /**
  * Default variation for ContactForm Slice
@@ -1010,10 +1048,8 @@ declare module "@prismicio/client" {
     export type {
       ArticleDocument,
       ArticleDocumentData,
+      ArticleDocumentDataTopicsItem,
       ArticleDocumentDataSlicesSlice,
-      CategoryDocument,
-      CategoryDocumentData,
-      CategoryDocumentDataGroupItem,
       NavigationDocument,
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
@@ -1022,6 +1058,8 @@ declare module "@prismicio/client" {
       PageDocumentDataSlicesSlice,
       SettingsDocument,
       SettingsDocumentData,
+      TopicDocument,
+      TopicDocumentData,
       AllDocumentTypes,
       ContactFormSlice,
       ContactFormSliceVariation,

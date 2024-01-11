@@ -2,9 +2,8 @@ import React from 'react'
 import { createClient } from '@/src/prismicio'
 import * as prismic from "@prismicio/client";
 
-import { Layout } from '@/src/components/Layout';
 import { Bounded } from '@/src/components/Bounded';
-import CategorySelector from '@/src/components/CategorySelector';
+import CategorySelector from '@/src/components/TopicSelector';
 import { Article } from '@/src/components/Article';
 
 interface SearchPageProps {
@@ -13,20 +12,18 @@ interface SearchPageProps {
 
 export const dynamicParams = false;
 
-export async function generateMetadata() {
+export async function generateMetadata({ searchParams } : SearchPageProps) {
     const client = createClient()
     const settings = await client.getSingle("settings")
 
     return {
-        title: prismic.asText(settings.data.name)
+        title: prismic.asText(settings.data.name) + ` - Search result for ${searchParams.key}`,
+        description: `Search result for ${searchParams.key}`
     }
 }
 
 export default async function SearchPage({ searchParams } : SearchPageProps) {
     const client = createClient()
-
-    const navigation = await client.getSingle("navigation");
-    const settings = await client.getSingle("settings");
 
     const results = await client.getByType("article", {
         orderings: [
@@ -40,29 +37,24 @@ export default async function SearchPage({ searchParams } : SearchPageProps) {
         ]
     })
 
-    // console.log(results.results[2].data)
     let articles = results.results
 
     return (
         <>
-            <Layout
-                withHeaderDivider={false}
-                navigation={navigation}
-                settings={settings}
-            >
-                <Bounded size="widest">
-                    <CategorySelector />
-                    <ul className='grid grid-cols-1 gap-16'>
-                        {
-                            articles.length > 0 ? articles.map((article: any) => (
-                                <Article key={article.title} article={article} />
-                            ))
-                            :
-                            <p>No documents found</p>
-                        }
-                    </ul>
-                </Bounded>
-            </Layout>
+
+            <Bounded size="widest">
+                <CategorySelector />
+                <ul className='grid grid-cols-1 gap-16'>
+                    {
+                        articles.length > 0 ? articles.map((article: any) => (
+                            <Article key={article.title} article={article} />
+                        ))
+                        :
+                        <p>No documents found</p>
+                    }
+                </ul>
+            </Bounded>
+
         </>
     )
 }

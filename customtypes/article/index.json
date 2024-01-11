@@ -40,6 +40,22 @@
           "thumbnails": []
         }
       },
+      "topics": {
+        "type": "Group",
+        "config": {
+          "label": "Topics",
+          "fields": {
+            "topic": {
+              "type": "Link",
+              "config": {
+                "label": "Topic",
+                "select": "document",
+                "customtypes": ["topic"]
+              }
+            }
+          }
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
