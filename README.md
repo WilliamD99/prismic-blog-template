@@ -10,6 +10,7 @@ This sample blog is an excellent starting point to explore [Next.js][nextjs] and
 - Dynamic OG images
 - Blog post categorized
 - Page pagination, page limit
+- Page/Article building with Prismic Slice Machine.
 
 ## 🚀 Quick Start
 
