@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { createClient } from "../../prismicio";
 import { components } from "../../slices";
-import { Layout } from "../../components/Layout";
 
 interface PageProps {
   params: { uid: string }
@@ -39,13 +38,9 @@ export default async function Page({ params } : PageProps) {
   const page = await client
     .getByUID("page", params.uid)
     .catch(() => notFound());
-  const navigation = await client.getSingle("navigation");
-  const settings = await client.getSingle("settings");
 
   return (
-    <Layout navigation={navigation} settings={settings}>
       <SliceZone slices={page.data.slices} components={components} />
-    </Layout>
   );
 }
 

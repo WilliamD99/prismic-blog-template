@@ -5,7 +5,7 @@ import { Bounded } from "../../components/Bounded";
 import { PrismicRichText } from "../../components/PrismicRichText";
 
 const Image = ({ slice }) => {
-  const image = slice.primary.image;
+  const image = slice.primary?.image;
 
   return (
     <Bounded as="section" size={slice.variation === "wide" ? "widest" : "base"}>
@@ -15,7 +15,7 @@ const Image = ({ slice }) => {
             <PrismicNextImage field={image} sizes="100vw" className="w-full" />
           </div>
         )}
-        {prismic.isFilled.richText(slice.primary.caption) && (
+        {prismic.isFilled.richText(slice.primary?.caption) && (
           <figcaption className="text-center font-serif italic tracking-tight text-slate-500">
             <PrismicRichText field={slice.primary.caption} />
           </figcaption>

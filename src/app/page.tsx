@@ -24,7 +24,7 @@ export default async function Index({ searchParams }: SearchParamsProps) {
   
   // Pagination Params
   let pageNum = searchParams.page ?? 1
-  let pageLimit = searchParams.limit ?? 2 // WIP
+  let pageLimit = searchParams.limit ?? 5
 
   const results = await client.getByType("article", {
     orderings: [
