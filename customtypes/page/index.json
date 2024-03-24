@@ -33,9 +33,6 @@
             "hero": {
               "type": "SharedSlice"
             },
-            "testing_slice": {
-              "type": "SharedSlice"
-            },
             "image": {
               "type": "SharedSlice"
             },

@@ -23,7 +23,6 @@ type ArticleDocumentDataSlicesSlice =
   | VideoBlockSlice
   | CustomerLogosSlice
   | HeroSlice
-  | TestingSliceSlice
   | ImageSlice
   | QuoteSlice
   | TextSlice
@@ -207,7 +206,6 @@ export type NavigationDocument<Lang extends string = string> =
 type PageDocumentDataSlicesSlice =
   | CustomerLogosSlice
   | HeroSlice
-  | TestingSliceSlice
   | ImageSlice
   | QuoteSlice
   | TextSlice
@@ -880,66 +878,6 @@ type QuoteSliceVariation = QuoteSliceDefault;
 export type QuoteSlice = prismic.SharedSlice<"quote", QuoteSliceVariation>;
 
 /**
- * Primary content in *TestingSlice → Primary*
- */
-export interface TestingSliceSliceDefaultPrimary {
-  /**
-   * Field Name field in *TestingSlice → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: testing_slice.primary.field_name
-   * - **Documentation**: https://prismic.io/docs/field#image
-   */
-  field_name: prismic.ImageField<never>;
-}
-
-/**
- * Primary content in *TestingSlice → Items*
- */
-export interface TestingSliceSliceDefaultItem {
-  /**
-   * HelloName field in *TestingSlice → Items*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: testing_slice.items[].helloname
-   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
-   */
-  helloname: prismic.LinkField;
-}
-
-/**
- * Default variation for TestingSlice Slice
- *
- * - **API ID**: `default`
- * - **Description**: Default
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type TestingSliceSliceDefault = prismic.SharedSliceVariation<
-  "default",
-  Simplify<TestingSliceSliceDefaultPrimary>,
-  Simplify<TestingSliceSliceDefaultItem>
->;
-
-/**
- * Slice variation for *TestingSlice*
- */
-type TestingSliceSliceVariation = TestingSliceSliceDefault;
-
-/**
- * TestingSlice Shared Slice
- *
- * - **API ID**: `testing_slice`
- * - **Description**: TestingSlice
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type TestingSliceSlice = prismic.SharedSlice<
-  "testing_slice",
-  TestingSliceSliceVariation
->;
-
-/**
  * Primary content in *Text → Primary*
  */
 export interface TextSliceDefaultPrimary {
@@ -1085,11 +1023,6 @@ declare module "@prismicio/client" {
       QuoteSliceDefaultPrimary,
       QuoteSliceVariation,
       QuoteSliceDefault,
-      TestingSliceSlice,
-      TestingSliceSliceDefaultPrimary,
-      TestingSliceSliceDefaultItem,
-      TestingSliceSliceVariation,
-      TestingSliceSliceDefault,
       TextSlice,
       TextSliceDefaultPrimary,
       TextSliceVariation,

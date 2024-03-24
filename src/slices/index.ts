@@ -8,7 +8,6 @@ export const components = {
   hero: dynamic(() => import("./Hero")),
   image: dynamic(() => import("./Image")),
   quote: dynamic(() => import("./Quote")),
-  testing_slice: dynamic(() => import("./TestingSlice")),
   text: dynamic(() => import("./Text")),
   video_block: dynamic(() => import("./VideoBlock")),
 };

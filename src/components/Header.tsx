@@ -17,6 +17,7 @@ interface ProfileProps {
   profilePicture: prismic.ImageField<never>
 }
 const Profile = ({ name, description, profilePicture } : ProfileProps) => {
+  
   return (
     <div className="px-4">
       <div className="grid max-w-lg grid-cols-1 justify-items-center gap-8">

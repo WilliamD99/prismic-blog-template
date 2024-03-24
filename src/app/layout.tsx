@@ -25,7 +25,7 @@ export default async function RootLayout({ children } : { children: React.ReactN
   const client = createClient();
   const navigation = await client.getSingle("navigation");
   const settings = await client.getSingle("settings");
-
+  
   return (
     <html
       lang="en"
