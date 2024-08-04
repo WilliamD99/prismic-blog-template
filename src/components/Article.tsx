@@ -28,7 +28,8 @@ export function Article({ article }: { article: ArticleDocument }) {
   );
   const excerpt = getExcerpt(article.data.slices);
   let topics = article.data.topics;
-  console.log(article.data.topics);
+  let short_desc = article.data.short_description;
+  console.log(topics);
   return (
     <li className="test article w-4/5 rounded-lg py-5 px-8">
       <div className="grid grid-cols-1 gap-3 md:col-span-2 space-y-4">
@@ -45,21 +46,17 @@ export function Article({ article }: { article: ArticleDocument }) {
           {topics.length > 0 && (
             <div className="font-serif text-sm flex flex-row space-x-1">
               <span className="font-bold">Category:</span>
-              {topics.map((topic) => (
+              {topics.map((topic, index) => (
                 <div key={topic.topic?.id}>
                   <Link href={topic.topic.url} className="capitalize">
-                    {extractNameFromUID(topic.topic.uid)}
+                    {extractNameFromUID(topic.topic.uid)} {index > 0 && ", "}
                   </Link>
                 </div>
               ))}
             </div>
           )}
         </div>
-        {excerpt && (
-          <p className="font-serif leading-relaxed md:text-lg md:leading-relaxed">
-            {excerpt}
-          </p>
-        )}
+        {short_desc.length > 0 && <p>{short_desc[0].text}</p>}
       </div>
     </li>
   );
