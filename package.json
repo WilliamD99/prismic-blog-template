@@ -24,7 +24,8 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@slicemachine/adapter-next": "^0.3.31",
+    "@prismicio/types": "^0.2.9",
+    "@slicemachine/adapter-next": "^0.3.45",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/react": "18.2.33",
     "autoprefixer": "^10.4.16",
@@ -34,7 +35,8 @@
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.6",
-    "slice-machine-ui": "^1.22.1",
+    "prismic-ts-codegen": "^0.1.21",
+    "slice-machine-ui": "^1.26.0",
     "tailwindcss": "^3.3.5"
   }
 }
