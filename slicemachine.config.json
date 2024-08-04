@@ -1,6 +1,6 @@
 {
   "libraries": ["./src/slices"],
   "adapter": "@slicemachine/adapter-next",
-  "repositoryName": "luci2",
+  "repositoryName": "testing-luci",
   "localSliceSimulatorURL": "http://localhost:3000/slice-simulator"
 }

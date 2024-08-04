@@ -16,36 +16,38 @@ export async function generateMetadata() {
 }
 
 interface SearchParamsProps {
-  searchParams: { page: number, limit: number }
+  searchParams: { page: number; limit: number };
 }
 
 export default async function Index({ searchParams }: SearchParamsProps) {
   const client = createClient();
-  
+
   // Pagination Params
-  let pageNum = searchParams.page ?? 1
-  let pageLimit = searchParams.limit ?? 5
+  let pageNum = searchParams.page ?? 1;
+  let pageLimit = searchParams.limit ?? 5;
 
   const results = await client.getByType("article", {
     orderings: [
       { field: "my.article.publishDate", direction: "desc" },
       { field: "document.first_publication_date", direction: "desc" },
-    ],    
+    ],
     pageSize: pageLimit,
-    page: pageNum
+    page: pageNum,
   });
-  let articles = results.results
-
-
+  let articles = results.results;
+  console.log(articles);
   return (
-      <Bounded size="widest">
-        <CategorySelector />
-        <ul className="grid grid-cols-1 gap-16">
+    <Bounded size="widest">
+      <div className="grid grid-cols-3">
+        <ul className="col-span-2 grid grid-cols-1 gap-10 articles">
+          <p className="text-2xl font-bold">All posts by date</p>
           {articles.map((article) => (
             <Article key={article.id} article={article} />
           ))}
         </ul>
-        <Pagination totalPage={results.total_pages}/>
-      </Bounded>
+        <CategorySelector />
+      </div>
+      <Pagination totalPage={results.total_pages} />
+    </Bounded>
   );
 }

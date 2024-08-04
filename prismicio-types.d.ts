@@ -77,6 +77,17 @@ interface ArticleDocumentData {
   topics: prismic.GroupField<Simplify<ArticleDocumentDataTopicsItem>>;
 
   /**
+   * Short Description field in *Article*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.short_description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  short_description: prismic.RichTextField;
+
+  /**
    * Slice Zone field in *Article*
    *
    * - **Field Type**: Slice Zone

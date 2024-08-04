@@ -8,21 +8,44 @@ import { Heading } from "./Heading";
 import { HorizontalDivider } from "./HorizontalDivider";
 
 // Types
-import {SettingsDocument, NavigationDocument} from "../../prismicio-types"
+import { SettingsDocument, NavigationDocument } from "../../prismicio-types";
 import SearchBtn from "./SearchBtn";
 
 interface ProfileProps {
-  name: prismic.TitleField,
-  description: prismic.RichTextField,
-  profilePicture: prismic.ImageField<never>
+  name: prismic.TitleField;
+  description: prismic.RichTextField;
+  profilePicture: prismic.ImageField<never>;
 }
-const Profile = ({ name, description, profilePicture } : ProfileProps) => {
-  
+const Profile = ({ name, description, profilePicture }: ProfileProps) => {
   return (
-    <div className="px-4">
-      <div className="grid max-w-lg grid-cols-1 justify-items-center gap-8">
-        <PrismicNextLink href="/" tabIndex={-1}>
-          <div className="relative h-40 w-40 overflow-hidden rounded-full bg-slate-300">
+    <div className="" id="test">
+      <div className="flex flex-row justify-between justify-items-center gap-8">
+        {(prismic.isFilled.richText(name) ||
+          prismic.isFilled.richText(description)) && (
+          <div className="flex flex-col justify-center space-y-7 flex-1">
+            {prismic.isFilled.richText(name) && (
+              <Heading>
+                <PrismicNextLink href="/">
+                  <PrismicText field={name} />
+                </PrismicNextLink>
+              </Heading>
+            )}
+            {prismic.isFilled.richText(description) && (
+              <>
+                <p className="font-serif text-lg leading-normal tracking-tight text-gray-600">
+                  <PrismicText field={description} />
+                </p>
+                <span className="line h-1 w-20 bg-black"></span>
+              </>
+            )}
+          </div>
+        )}
+        <PrismicNextLink
+          className="flex-1 flex justify-center"
+          href="/"
+          tabIndex={-1}
+        >
+          <div className="relative h-64 w-96 overflow-hidden rounded-md bg-slate-300">
             {prismic.isFilled.image(profilePicture) && (
               <PrismicNextImage
                 field={profilePicture}
@@ -33,39 +56,22 @@ const Profile = ({ name, description, profilePicture } : ProfileProps) => {
             )}
           </div>
         </PrismicNextLink>
-        {(prismic.isFilled.richText(name) ||
-          prismic.isFilled.richText(description)) && (
-          <div className="grid grid-cols-1 gap-2 text-center">
-            {prismic.isFilled.richText(name) && (
-              <Heading>
-                <PrismicNextLink href="/">
-                  <PrismicText field={name} />
-                </PrismicNextLink>
-              </Heading>
-            )}
-            {prismic.isFilled.richText(description) && (
-              <p className="font-serif text-2xl italic leading-normal tracking-tight text-slate-500">
-                <PrismicText field={description} />
-              </p>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
 };
 
-const NavItem = ({ children } : { children: React.ReactNode }) => {
+const NavItem = ({ children }: { children: React.ReactNode }) => {
   return (
     <li className="font-semibold tracking-tight text-slate-800">{children}</li>
   );
 };
 
 interface HeaderProps {
-  withDivider?: boolean,
-  withProfile?: boolean,
-  navigation: NavigationDocument,
-  settings: SettingsDocument,
+  withDivider?: boolean;
+  withProfile?: boolean;
+  navigation: NavigationDocument;
+  settings: SettingsDocument;
 }
 
 export const Header = ({
@@ -73,10 +79,10 @@ export const Header = ({
   withProfile = true,
   navigation,
   settings,
-} : HeaderProps) => {
+}: HeaderProps) => {
   return (
-    <Bounded as="header">
-      <div className="grid grid-cols-1 justify-items-center gap-20">
+    <Bounded as="header" size="widest">
+      <div id="test2" className="grid grid-cols-1 justify-items-center gap-20">
         <nav>
           <ul className="flex flex-wrap justify-center items-center gap-10">
             <NavItem>
@@ -91,8 +97,7 @@ export const Header = ({
                 </PrismicNextLink>
               </NavItem>
             ))}
-            <SearchBtn />
-
+            {/* <SearchBtn /> */}
           </ul>
         </nav>
         {withProfile && (
@@ -102,7 +107,7 @@ export const Header = ({
             profilePicture={settings.data.profilePicture}
           />
         )}
-        {withDivider && <HorizontalDivider />}
+        {/* {withDivider && <HorizontalDivider />} */}
       </div>
     </Bounded>
   );

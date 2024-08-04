@@ -9,40 +9,52 @@ import { dateFormatter } from "../lib/dateFormatter";
 import { Heading } from "./Heading";
 
 // Types
-import { ArticleDocument } from '../../prismicio-types'
+import { ArticleDocument } from "../../prismicio-types";
+import Link from "next/link";
 
-export function Article({ article } : { article : ArticleDocument}) {
+const extractNameFromUID = (str: string) => {
+  // let nameWithDash = str.split("/topic/")[1];
+  let name = str.split("-").join(" ");
+  return name;
+};
+
+export function Article({ article }: { article: ArticleDocument }) {
   const featuredImage =
     (prismic.isFilled.image(article.data.featuredImage) &&
       article.data.featuredImage) ||
     findFirstImage(article.data.slices);
   const date = prismic.asDate(
-    article.data.publishDate || article.first_publication_date,
+    article.data.publishDate || article.first_publication_date
   );
   const excerpt = getExcerpt(article.data.slices);
-
+  let topics = article.data.topics;
+  console.log(article.data.topics);
   return (
-    <li className="grid grid-cols-1 items-start gap-6 md:grid-cols-3 md:gap-8">
-      <PrismicNextLink document={article} tabIndex={-1}>
-        <div className="aspect-h-3 aspect-w-4 relative bg-gray-100">
-          {prismic.isFilled.image(featuredImage) && (
-            <PrismicNextImage
-              field={featuredImage}
-              fill={true}
-              className="object-cover"
-            />
-          )}
-        </div>
-      </PrismicNextLink>
-      <div className="grid grid-cols-1 gap-3 md:col-span-2">
-        <Heading as="h2">
+    <li className="test article w-4/5 rounded-lg py-5 px-8">
+      <div className="grid grid-cols-1 gap-3 md:col-span-2 space-y-4">
+        <Heading as="h4" size="3xl">
           <PrismicNextLink document={article}>
             <PrismicText field={article.data.title} />
           </PrismicNextLink>
         </Heading>
-        <p className="font-serif italic tracking-tighter text-slate-500">
-          {date ? dateFormatter.format(date) : <></>}
-        </p>
+        <div className="grid grid-cols-2">
+          <p className="font-serif text-sm">
+            <span className="font-bold">Published:</span>{" "}
+            {date ? dateFormatter.format(date) : <></>}
+          </p>
+          {topics.length > 0 && (
+            <div className="font-serif text-sm flex flex-row space-x-1">
+              <span className="font-bold">Category:</span>
+              {topics.map((topic) => (
+                <div key={topic.topic?.id}>
+                  <Link href={topic.topic.url} className="capitalize">
+                    {extractNameFromUID(topic.topic.uid)}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         {excerpt && (
           <p className="font-serif leading-relaxed md:text-lg md:leading-relaxed">
             {excerpt}
