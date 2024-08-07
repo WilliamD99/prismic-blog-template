@@ -8,9 +8,9 @@ import { HorizontalDivider } from "./HorizontalDivider";
 import { PrismicRichText } from "./PrismicRichText";
 
 // Types
-import { SettingsDocument } from '../../prismicio-types'
+import { SettingsDocument } from "../../prismicio-types";
 
-function SignUpForm({ settings } : { settings: SettingsDocument}) {
+function SignUpForm({ settings }: { settings: SettingsDocument }) {
   return (
     <div className="px-4">
       <form
@@ -23,12 +23,12 @@ function SignUpForm({ settings } : { settings: SettingsDocument}) {
             <PrismicRichText
               field={settings.data.newsletterDescription}
               components={{
-                heading1: ({ children } : { children: React.ReactNode }) => (
+                heading1: ({ children }: { children: React.ReactNode }) => (
                   <Heading as="h2" className="mb-4 last:mb-0">
                     {children}
                   </Heading>
                 ),
-                paragraph: ({ children } : { children: React.ReactNode }) => (
+                paragraph: ({ children }: { children: React.ReactNode }) => (
                   <p className="mb-4 italic last:mb-0">{children}</p>
                 ),
               }}
@@ -67,16 +67,44 @@ function SignUpForm({ settings } : { settings: SettingsDocument}) {
 }
 
 interface FooterProps {
-  withSignUpForm?: boolean,
-  settings: SettingsDocument
+  withSignUpForm?: boolean;
+  settings: SettingsDocument;
 }
 
-export function Footer({ withSignUpForm = true, settings } : FooterProps) {
+export function Footer({ withSignUpForm = true, settings }: FooterProps) {
   return (
-    <Bounded as="footer">
-      <div className="grid grid-cols-1 justify-items-center gap-24">
-        <HorizontalDivider />
-        {withSignUpForm && <SignUpForm settings={settings} />}
+    <Bounded as="footer" size="widest" className="bg-black">
+      <div className="max-w-4xl mx-auto">
+        <div className="grid lg:grid-cols-4 gap-5">
+          <div className="flex flex-col space-y-3">
+            <p className="text-white text-lg">Links</p>
+            <div className="flex flex-col space-y-2">
+              <p className="text-white text-sm">My Books</p>
+              <p className="text-white text-sm">Newsletter</p>
+              <p className="text-white text-sm">About</p>
+            </div>
+          </div>
+          <div className="flex flex-col space-y-3">
+            <p className="text-white text-lg">More</p>
+            <div className="flex flex-col space-y-2">
+              <p className="text-white text-sm">Content 1</p>
+              <p className="text-white text-sm">Content 2</p>
+              <p className="text-white text-sm">Content 3</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-end space-y-3 col-span-2">
+            <div className="flex flex-col justify-end space-y-2">
+              <p className="text-white text-sm">
+                &#169; Will Doan 2024. All Rights Reserved.
+              </p>
+              <div className="flex flex-row space-x-4">
+                <p className="text-white text-sm">Privacy Policy</p>
+                <p className="text-white text-sm">Cookie Policy</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </Bounded>
   );

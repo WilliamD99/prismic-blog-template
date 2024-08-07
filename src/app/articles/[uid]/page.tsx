@@ -1,6 +1,5 @@
-import Link from "next/link";
 import * as prismic from "@prismicio/client";
-import { PrismicNextLink } from "@prismicio/next";
+import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { PrismicText, SliceZone } from "@prismicio/react";
 
 import { createClient } from "../../../prismicio";
@@ -11,7 +10,9 @@ import { HorizontalDivider } from "../../../components/HorizontalDivider";
 import { notFound } from "next/navigation";
 
 // Types
-import { ArticleDocument } from '../../../../prismicio-types'
+import { ArticleDocument } from "../../../../prismicio-types";
+import { findFirstImage } from "@/src/lib/findFirstImage";
+import CategorySelector from "@/src/components/TopicSelector";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -19,7 +20,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
-function LatestArticle({ article } : { article: ArticleDocument}) {
+function LatestArticle({ article }: { article: ArticleDocument }) {
   const date = prismic.asDate(
     article.data.publishDate || article.first_publication_date
   );
@@ -39,10 +40,10 @@ function LatestArticle({ article } : { article: ArticleDocument}) {
 }
 
 interface PageProps {
-  params: { uid: string }
+  params: { uid: string };
 }
 
-export async function generateMetadata({ params } : PageProps) {
+export async function generateMetadata({ params }: PageProps) {
   const client = createClient();
   const settings = await client.getSingle("settings");
   const article = await client
@@ -65,7 +66,7 @@ export async function generateMetadata({ params } : PageProps) {
   };
 }
 
-export default async function Page({ params } : PageProps) {
+export default async function Page({ params }: PageProps) {
   const client = createClient();
 
   const article = await client
@@ -77,33 +78,51 @@ export default async function Page({ params } : PageProps) {
       { field: "my.article.publishDate", direction: "desc" },
       { field: "document.first_publication_date", direction: "desc" },
     ],
+    filters: [prismic.filter.not("document.id", article.id)],
   });
-
   const date = prismic.asDate(
     article.data.publishDate || article.first_publication_date
   );
 
+  const featuredImage =
+    (prismic.isFilled.image(article.data.featuredImage) &&
+      article.data.featuredImage) ||
+    findFirstImage(article.data.slices);
+
   return (
     <>
-      <Bounded>
-        <Link href="/" className="font-semibold tracking-tight text-slate-400">
-          &larr; Back to articles
-        </Link>
-      </Bounded>
-      <article>
-        <Bounded className="pb-0">
-          <h1 className="mb-3 text-3xl font-semibold tracking-tighter text-slate-800 md:text-4xl">
-            <PrismicText field={article.data.title} />
-          </h1>
-          <p className="font-serif italic tracking-tighter text-slate-500">
-            {dateFormatter.format(date)}
-          </p>
-        </Bounded>
-        <SliceZone slices={article.data.slices} components={components} />
-      </article>
-      {latestArticles.length > 0 && (
-        <Bounded>
-          <div className="grid grid-cols-1 justify-items-center gap-16 md:gap-24">
+      <Bounded size="wide">
+        <article>
+          <div className="px-4 relative h-full w-full grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div className="relative flex flex-col justify-center">
+              <h1 className="mb-3 text-2xl lg:text-3xl font-semibold tracking-tighter text-slate-800">
+                <PrismicText field={article.data.title} />
+              </h1>
+              <p className="font-serif italic tracking-tighter text-slate-500">
+                {dateFormatter.format(date)}
+              </p>
+            </div>
+            <div className="aspect-h-4 aspect-w-6 relative bg-gray-100 rounded-md overflow-hidden">
+              {prismic.isFilled.image(featuredImage) && (
+                <PrismicNextImage
+                  field={featuredImage}
+                  fill={true}
+                  className="object-cover"
+                />
+              )}
+            </div>
+          </div>
+          <div className="slice_zone grid grid-cols-3 gap-10">
+            <div className="col-span-3 lg:col-span-2 relative">
+              <SliceZone slices={article.data.slices} components={components} />
+            </div>
+            <div className="hidden lg:block py-8 md:py-10 lg:py-12">
+              <CategorySelector />
+            </div>
+          </div>
+        </article>
+        {latestArticles.length > 0 && (
+          <div className="px-4 grid grid-cols-1 justify-items-center gap-16 md:gap-24">
             <HorizontalDivider />
             <div className="w-full">
               <Heading size="2xl" className="mb-10">
@@ -116,8 +135,8 @@ export default async function Page({ params } : PageProps) {
               </ul>
             </div>
           </div>
-        </Bounded>
-      )}
+        )}
+      </Bounded>
     </>
   );
 }

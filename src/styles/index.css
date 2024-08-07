@@ -3,7 +3,7 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .articles .article:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 #search-bar {
@@ -11,4 +11,11 @@
 }
 #search-bar:focus {
   outline: none;
+}
+
+.slice_zone .mx-auto.w-full.max-w-3xl {
+  max-width: 100% !important;
+}
+.slice_zone p {
+  font-size: 16px;
 }/*# sourceMappingURL=index.css.map */
