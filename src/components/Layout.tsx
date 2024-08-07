@@ -22,7 +22,7 @@ export function Layout({
   children,
 }: LayoutProps) {
   return (
-    <div className="text-slate-700 h-full flex flex-col">
+    <div className="text-slate-700 min-h-screen flex flex-col">
       <Header
         withProfile={withProfile}
         withDivider={withHeaderDivider}
