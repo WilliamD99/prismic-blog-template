@@ -78,7 +78,7 @@ export default async function Index({ searchParams }: SearchParamsProps) {
 
   // Pagination Params
   let pageNum = searchParams.page ?? 1;
-  let pageLimit = searchParams.limit ?? 5;
+  let pageLimit = searchParams.limit ?? 2;
 
   const results = await client.getByType("article", {
     orderings: [
@@ -102,17 +102,19 @@ export default async function Index({ searchParams }: SearchParamsProps) {
       </div>
 
       <div className="grid grid-cols-3">
-        <ul className="col-span-3 lg:col-span-2 grid grid-cols-1 gap-5 lg:gap-10 articles">
-          <p className="text-2xl font-bold">All posts by date</p>
-          {articles.map((article) => (
-            <Article key={article.id} article={article} />
-          ))}
-        </ul>
+        <div className="col-span-3 lg:col-span-2">
+          <ul className=" grid grid-cols-1 gap-5 lg:gap-10 articles">
+            <p className="text-2xl font-bold">All posts by date</p>
+            {articles.map((article) => (
+              <Article key={article.id} article={article} />
+            ))}
+          </ul>
+          <Pagination totalPage={results.total_pages} />
+        </div>
         <div className="relative hidden lg:block">
           <CategorySelector />
         </div>
       </div>
-      <Pagination totalPage={results.total_pages} />
     </Bounded>
   );
 }

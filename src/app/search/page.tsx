@@ -50,9 +50,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         <div className="grid grid-cols-3">
           <ul className="col-span-2 grid grid-cols-1 gap-10 articles">
             <p className="text-2xl font-bold">All posts by date</p>
-            {articles.map((article) => (
-              <Article key={article.id} article={article} />
-            ))}
+            {articles.length > 0 ? (
+              <>
+                {articles.map((article) => (
+                  <Article key={article.id} article={article} />
+                ))}
+              </>
+            ) : (
+              <p>No articles found</p>
+            )}
           </ul>
           <CategorySelector />
         </div>

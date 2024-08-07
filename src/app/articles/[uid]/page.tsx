@@ -70,7 +70,13 @@ export default async function Page({ params }: PageProps) {
   const client = createClient();
 
   const article = await client
-    .getByUID("article", params.uid)
+    .getByUID<
+      prismic.Content.ArticleDocument & {
+        data: {
+          author: prismic.Content.AuthorDocument;
+        };
+      }
+    >("article", params.uid)
     .catch(() => notFound());
   const latestArticles = await client.getAllByType("article", {
     limit: 3,
@@ -88,6 +94,10 @@ export default async function Page({ params }: PageProps) {
     (prismic.isFilled.image(article.data.featuredImage) &&
       article.data.featuredImage) ||
     findFirstImage(article.data.slices);
+
+  const author = article.data.author;
+  console.log(author.id);
+  console.log(author);
 
   return (
     <>

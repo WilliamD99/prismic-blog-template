@@ -28,7 +28,7 @@ export const Header = ({ navigation }: HeaderProps) => {
         <nav>
           <ul className="flex flex-wrap justify-center items-center gap-10">
             <NavItem>
-              <Link href="/">
+              <Link href="/" className="font-bold text-3xl">
                 <PrismicText field={navigation.data.homepageLabel} />
               </Link>
             </NavItem>
